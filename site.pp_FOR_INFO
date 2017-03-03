@@ -1,15 +1,16 @@
+
 node 'node01.example.com' {
 # Test message
-  notify { "Confirm output on ${hostname} node.": }
+  notify { "Debug output on ${hostname} node.": }
 
-  include webapp,load_balancer
+  include webapp,load_balancer,sudoers
 }
 
 node 'web01.example.com', 'web02.example.com' {
 # Test message
-  notify { "Confirm output on ${hostname} node.": }
+  notify { "Debug output on ${hostname} node.": }
 
-  include webapp
+  include webapp,sudoers
 }
 
 
