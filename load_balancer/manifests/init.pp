@@ -37,6 +37,13 @@
 #
 class load_balancer {
 
+  exec { "remove file":
+    path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
+    command => "rm /etc/nginx/sites-enabled/default",
+    creates => '/etc/nginx/conf.d/load-balancer.conf',
+    notify  => Service['nginx'],
+  } ~>
+
   file { '/etc/nginx/conf.d/load-balancer.conf':
     ensure  => 'file',
     group   => '0',
@@ -45,12 +52,5 @@ class load_balancer {
     content  => template("load_balancer/load_balancer.erb"),
     notify  => Service['nginx'],
   }
-  exec { "remove file":
-    path    => ['/usr/bin','/usr/sbin','/bin','/sbin'],
-    command => "rm /etc/nginx/sites-enabled/default",
-    require => File["/etc/nginx/conf.d/load-balancer.conf"],
-    notify  => Service['nginx'],
-}
-
 
 }

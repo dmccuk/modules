@@ -56,5 +56,4 @@ class webapp {
     notify  => Service['nginx'],
   }
 
-
 }
